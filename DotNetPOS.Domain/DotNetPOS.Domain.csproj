@@ -10,4 +10,8 @@
     <PackageReference Include="Ulid" Version="1.3.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetPOS.Database\DotNetPOS.Database.csproj" />
+  </ItemGroup>
+
 </Project>
