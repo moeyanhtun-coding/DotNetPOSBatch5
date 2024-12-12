@@ -15,116 +15,88 @@ public partial class AppDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Product> Products { get; set; }
+    public virtual DbSet<TblProduct> TblProducts { get; set; }
 
-    public virtual DbSet<ProductCategory> ProductCategories { get; set; }
+    public virtual DbSet<TblProductCategory> TblProductCategories { get; set; }
 
-    public virtual DbSet<Sale> Sales { get; set; }
+    public virtual DbSet<TblSale> TblSales { get; set; }
 
-    public virtual DbSet<SaleDetail> SaleDetails { get; set; }
+    public virtual DbSet<TblSaleDetail> TblSaleDetails { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
         {
-            string connectionString = "Data Source=.; Initial Catalog = MYTDotNetCoreBatch5POS; User ID=sa; Password=sasa@123; TrustServerCertificate = true";
+            string connectionString = "Data Source=.; Initial Catalog = DotNetCoreBatch5POS; User ID=sa; Password=sasa@123; TrustServerCertificate = true";
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Product>(entity =>
+        modelBuilder.Entity<TblProduct>(entity =>
         {
-            entity.HasKey(e => e.ProductId).HasName("PK__Product__2D10D16AA441091E");
+            entity.HasKey(e => e.ProductId);
 
-            entity.ToTable("Product");
+            entity.ToTable("Tbl_Product");
 
-            entity.HasIndex(e => e.ProductCode, "UQ__Product__C2068389823829EB").IsUnique();
-
-            entity.Property(e => e.ProductId).HasColumnName("productId");
+            entity.Property(e => e.Name)
+                .HasMaxLength(200)
+                .IsUnicode(false);
             entity.Property(e => e.Price)
-                .HasColumnType("decimal(18, 0)")
-                .HasColumnName("price");
-            entity.Property(e => e.ProductCategoryCode)
-                .HasMaxLength(10)
-                .HasColumnName("productCategoryCode");
-            entity.Property(e => e.ProductCode)
-                .HasMaxLength(10)
-                .HasColumnName("productCode");
-            entity.Property(e => e.ProductName)
-                .HasMaxLength(10)
-                .HasColumnName("productName");
-
-            entity.HasOne(d => d.ProductCategoryCodeNavigation).WithMany(p => p.Products)
-                .HasPrincipalKey(p => p.ProductCategoryCode)
-                .HasForeignKey(d => d.ProductCategoryCode)
-                .HasConstraintName("FK__Product__product__4D94879B");
-        });
-
-        modelBuilder.Entity<ProductCategory>(entity =>
-        {
-            entity.HasKey(e => e.ProductCategoryId).HasName("PK__ProductC__A944253B3E29E1CA");
-
-            entity.ToTable("ProductCategory");
-
-            entity.HasIndex(e => e.ProductCategoryCode, "UQ__ProductC__54C506DB1D52EC18").IsUnique();
-
-            entity.Property(e => e.ProductCategoryId).HasColumnName("productCategoryId");
-            entity.Property(e => e.ProductCategoryCode)
-                .HasMaxLength(10)
-                .HasColumnName("productCategoryCode");
-            entity.Property(e => e.ProductCategoryName)
                 .HasMaxLength(50)
-                .HasColumnName("productCategoryName");
-        });
-
-        modelBuilder.Entity<Sale>(entity =>
-        {
-            entity.HasKey(e => e.SaleId).HasName("PK__Sale__FAE8F4F5E7178E60");
-
-            entity.ToTable("Sale");
-
-            entity.HasIndex(e => e.VoucherNo, "UQ__Sale__F533A04B8BD798D9").IsUnique();
-
-            entity.Property(e => e.SaleId).HasColumnName("saleId");
-            entity.Property(e => e.SaleDate)
-                .HasColumnType("datetime")
-                .HasColumnName("saleDate");
-            entity.Property(e => e.TotalAmount)
-                .HasColumnType("decimal(18, 0)")
-                .HasColumnName("totalAmount");
-            entity.Property(e => e.VoucherNo)
-                .HasMaxLength(10)
-                .HasColumnName("voucherNo");
-        });
-
-        modelBuilder.Entity<SaleDetail>(entity =>
-        {
-            entity.HasKey(e => e.SaleDetailsId).HasName("PK__SaleDeta__EF18C02015845BB8");
-
-            entity.Property(e => e.SaleDetailsId).HasColumnName("saleDetailsId");
-            entity.Property(e => e.Price)
-                .HasColumnType("decimal(18, 0)")
-                .HasColumnName("price");
+                .IsUnicode(false);
+            entity.Property(e => e.ProductCategoryCode)
+                .HasMaxLength(200)
+                .IsUnicode(false);
             entity.Property(e => e.ProductCode)
-                .HasMaxLength(10)
-                .HasColumnName("productCode");
-            entity.Property(e => e.Quantity).HasColumnName("quantity");
+                .HasMaxLength(200)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<TblProductCategory>(entity =>
+        {
+            entity.HasKey(e => e.ProductCategoryId);
+
+            entity.ToTable("Tbl_ProductCategory");
+
+            entity.Property(e => e.Name)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.ProductCategoryCode)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+        });
+
+        modelBuilder.Entity<TblSale>(entity =>
+        {
+            entity.HasKey(e => e.SaleId);
+
+            entity.ToTable("Tbl_Sale");
+
+            entity.Property(e => e.SaleDate).HasColumnType("date");
+            entity.Property(e => e.TotalAmount)
+                .HasMaxLength(200)
+                .IsUnicode(false);
             entity.Property(e => e.VoucherNo)
-                .HasMaxLength(10)
-                .HasColumnName("voucherNo");
+                .HasMaxLength(200)
+                .IsUnicode(false);
+        });
 
-            entity.HasOne(d => d.ProductCodeNavigation).WithMany(p => p.SaleDetails)
-                .HasPrincipalKey(p => p.ProductCode)
-                .HasForeignKey(d => d.ProductCode)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__SaleDetai__produ__5441852A");
+        modelBuilder.Entity<TblSaleDetail>(entity =>
+        {
+            entity.HasKey(e => e.SaleDetailId);
 
-            entity.HasOne(d => d.VoucherNoNavigation).WithMany(p => p.SaleDetails)
-                .HasPrincipalKey(p => p.VoucherNo)
-                .HasForeignKey(d => d.VoucherNo)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__SaleDetai__vouch__534D60F1");
+            entity.ToTable("Tbl_SaleDetail");
+
+            entity.Property(e => e.Price)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.ProductCode)
+                .HasMaxLength(200)
+                .IsUnicode(false);
+            entity.Property(e => e.VoucherNo)
+                .HasMaxLength(200)
+                .IsUnicode(false);
         });
 
         OnModelCreatingPartial(modelBuilder);

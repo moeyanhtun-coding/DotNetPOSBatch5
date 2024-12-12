@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DotNetPOS.Database.Models;
 
-public partial class Sale
+public partial class TblSale
 {
     public int SaleId { get; set; }
 
@@ -11,7 +11,5 @@ public partial class Sale
 
     public DateTime SaleDate { get; set; }
 
-    public decimal TotalAmount { get; set; }
-
-    public virtual ICollection<SaleDetail> SaleDetails { get; set; } = new List<SaleDetail>();
+    public string TotalAmount { get; set; } = null!;
 }
