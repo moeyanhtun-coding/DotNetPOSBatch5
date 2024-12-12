@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DotNetPOS.Domain.Features
 {
-    public class ProductCategory
+    public class ProductCategoryService
     {
     }
 }
