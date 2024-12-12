@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35507.96 d17.13
+VisualStudioVersion = 17.13.35507.96
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetPOSBatch5", "DotNetPOSBatch5\DotNetPOSBatch5.csproj", "{5CD156E3-C916-4FBC-891B-E3C79DC3C868}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetPOSBatch5", "DotNetPOSBatch5\DotNetPOSBatch5.csproj", "{5CD156E3-C916-4FBC-891B-E3C79DC3C868}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetPOS.Domain", "DotNetPOS.Domain\DotNetPOS.Domain.csproj", "{008C24C5-3047-4CE5-935D-E501CEEB2CEE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{5CD156E3-C916-4FBC-891B-E3C79DC3C868}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5CD156E3-C916-4FBC-891B-E3C79DC3C868}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5CD156E3-C916-4FBC-891B-E3C79DC3C868}.Release|Any CPU.Build.0 = Release|Any CPU
+		{008C24C5-3047-4CE5-935D-E501CEEB2CEE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{008C24C5-3047-4CE5-935D-E501CEEB2CEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{008C24C5-3047-4CE5-935D-E501CEEB2CEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{008C24C5-3047-4CE5-935D-E501CEEB2CEE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
