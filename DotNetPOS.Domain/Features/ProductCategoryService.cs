@@ -57,7 +57,8 @@ namespace DotNetPOS.Domain.Features
                 .FirstOrDefault(x =>x.ProductCategoryCode == categoryCode);
             if (item is null)
                 return 0;
-            _db.Entry(item).State = EntityState.Deleted;
+            item.DeleteFlag = true;
+            _db.Entry(item).State = EntityState.Modified;
            var result = _db.SaveChanges();
             return result;
         }
