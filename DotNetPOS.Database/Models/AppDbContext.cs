@@ -24,79 +24,69 @@ public partial class AppDbContext : DbContext
     public virtual DbSet<TblSaleDetail> TblSaleDetails { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        if (!optionsBuilder.IsConfigured)
-        {
-            string connectionString = "Data Source=.; Initial Catalog = DotNetCoreBatch5POS; User ID=sa; Password=sasa@123; TrustServerCertificate = true";
-            optionsBuilder.UseSqlServer(connectionString);
-        }
-    }
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=.;Database=DotNetCoreBatch5POS;User Id=sa;Password=sasa@123;TrustServerCertificate=True;");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TblProduct>(entity =>
         {
-            entity.HasKey(e => e.ProductId);
+            entity.HasKey(e => e.ProductId).HasName("PK__TblProdu__B40CC6CD8FFAA800");
 
-            entity.ToTable("Tbl_Product");
+            entity.ToTable("TblProduct");
 
-            entity.Property(e => e.Name)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.Price)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.ProductCategoryCode)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.ProductCode)
-                .HasMaxLength(200)
-                .IsUnicode(false);
+            entity.HasIndex(e => e.ProductCode, "UQ__TblProdu__2F4E024F4B4DBE7C").IsUnique();
+
+            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.Price).HasMaxLength(20);
+            entity.Property(e => e.ProductCategoryCode).HasMaxLength(50);
+            entity.Property(e => e.ProductCode).HasMaxLength(50);
         });
 
         modelBuilder.Entity<TblProductCategory>(entity =>
         {
-            entity.HasKey(e => e.ProductCategoryId);
+            entity.HasKey(e => e.ProductCategoryId).HasName("PK__TblProdu__3224ECCEC6BD99EB");
 
-            entity.ToTable("Tbl_ProductCategory");
+            entity.ToTable("TblProductCategory");
 
-            entity.Property(e => e.Name)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.ProductCategoryCode)
-                .HasMaxLength(200)
-                .IsUnicode(false);
+            entity.Property(e => e.Name).HasMaxLength(100);
+            entity.Property(e => e.ProductCategoryCode).HasMaxLength(50);
         });
 
         modelBuilder.Entity<TblSale>(entity =>
         {
-            entity.HasKey(e => e.SaleId);
+            entity.HasKey(e => e.SaleId).HasName("PK__TblSale__1EE3C3FF9ED36C78");
 
-            entity.ToTable("Tbl_Sale");
+            entity.ToTable("TblSale");
 
-            entity.Property(e => e.SaleDate).HasColumnType("date");
-            entity.Property(e => e.TotalAmount)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.VoucherNo)
-                .HasMaxLength(200)
-                .IsUnicode(false);
+            entity.HasIndex(e => e.VoucherNo, "UQ__TblSale__3AD31D6F90A2C9C8").IsUnique();
+
+            entity.Property(e => e.SaleDate).HasColumnType("datetime");
+            entity.Property(e => e.TotalAmount).HasMaxLength(20);
+            entity.Property(e => e.VoucherNo).HasMaxLength(50);
         });
 
         modelBuilder.Entity<TblSaleDetail>(entity =>
         {
-            entity.HasKey(e => e.SaleDetailId);
+            entity.HasKey(e => e.SaleDetailId).HasName("PK__TblSaleD__70DB14FE8440BB65");
 
-            entity.ToTable("Tbl_SaleDetail");
+            entity.ToTable("TblSaleDetail");
 
-            entity.Property(e => e.Price)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.ProductCode)
-                .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.VoucherNo)
-                .HasMaxLength(200)
-                .IsUnicode(false);
+            entity.Property(e => e.Price).HasMaxLength(20);
+            entity.Property(e => e.ProductCode).HasMaxLength(50);
+            entity.Property(e => e.VoucherNo).HasMaxLength(50);
+
+            entity.HasOne(d => d.ProductCodeNavigation).WithMany(p => p.TblSaleDetails)
+                .HasPrincipalKey(p => p.ProductCode)
+                .HasForeignKey(d => d.ProductCode)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__TblSaleDe__Produ__403A8C7D");
+
+            entity.HasOne(d => d.VoucherNoNavigation).WithMany(p => p.TblSaleDetails)
+                .HasPrincipalKey(p => p.VoucherNo)
+                .HasForeignKey(d => d.VoucherNo)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__TblSaleDe__Vouch__3F466844");
         });
 
         OnModelCreatingPartial(modelBuilder);

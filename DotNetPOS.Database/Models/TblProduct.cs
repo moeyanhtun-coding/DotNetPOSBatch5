@@ -14,4 +14,6 @@ public partial class TblProduct
     public string Price { get; set; } = null!;
 
     public string ProductCategoryCode { get; set; } = null!;
+
+    public virtual ICollection<TblSaleDetail> TblSaleDetails { get; set; } = new List<TblSaleDetail>();
 }

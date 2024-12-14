@@ -12,4 +12,6 @@ public partial class TblSale
     public DateTime SaleDate { get; set; }
 
     public string TotalAmount { get; set; } = null!;
+
+    public virtual ICollection<TblSaleDetail> TblSaleDetails { get; set; } = new List<TblSaleDetail>();
 }

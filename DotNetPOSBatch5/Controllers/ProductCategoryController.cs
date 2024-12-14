@@ -8,11 +8,16 @@ namespace DotNetPOSBatch5.Controllers
     [ApiController]
     public class ProductCategoryController : ControllerBase
     {
-        private readonly ProductCategoryService _service = new ProductCategoryService();
+        private readonly ProductCategoryService _service;
+
+        public ProductCategoryController(ProductCategoryService service)
+        {
+            _service = service;
+        }
+
         [HttpGet]
         public IActionResult GetProductCategories()
         {
-
             var lst = _service.GetProductCategories();
             return Ok(new { data = lst });
         }

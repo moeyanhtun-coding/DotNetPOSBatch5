@@ -10,7 +10,13 @@ namespace DotNetPOS.Domain.Features
 {
     public class ProductCategoryService
     {
-        private readonly AppDbContext _db = new AppDbContext();
+        private readonly AppDbContext _db;
+
+        public ProductCategoryService(AppDbContext db)
+        {
+            _db = db;
+        }
+
         public List<TblProductCategory> GetProductCategories()
         {
             var lst = _db.TblProductCategories.ToList();
