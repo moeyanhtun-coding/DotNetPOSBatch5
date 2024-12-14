@@ -14,4 +14,6 @@ public partial class TblProduct
     public double Price { get; set; }
 
     public string ProductCategoryCode { get; set; } = null!;
+
+    public bool DeleteFlag { get; set; } = false;
 }
