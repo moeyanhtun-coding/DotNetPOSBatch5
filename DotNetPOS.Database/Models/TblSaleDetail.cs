@@ -13,5 +13,5 @@ public partial class TblSaleDetail
 
     public int Quantity { get; set; }
 
-    public string Price { get; set; } = null!;
+    public double Price { get; set; }
 }

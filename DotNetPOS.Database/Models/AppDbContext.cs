@@ -25,12 +25,13 @@ public partial class AppDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        if (!optionsBuilder.IsConfigured)
+        if (!optionsBuilder.IsConfigured) 
         {
             string connectionString = "Data Source=.; Initial Catalog = DotNetCoreBatch5POS; User ID=sa; Password=sasa@123; TrustServerCertificate = true";
             optionsBuilder.UseSqlServer(connectionString);
         }
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<TblProduct>(entity =>
@@ -41,9 +42,6 @@ public partial class AppDbContext : DbContext
 
             entity.Property(e => e.Name)
                 .HasMaxLength(200)
-                .IsUnicode(false);
-            entity.Property(e => e.Price)
-                .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.ProductCategoryCode)
                 .HasMaxLength(200)
@@ -74,9 +72,6 @@ public partial class AppDbContext : DbContext
             entity.ToTable("Tbl_Sale");
 
             entity.Property(e => e.SaleDate).HasColumnType("date");
-            entity.Property(e => e.TotalAmount)
-                .HasMaxLength(200)
-                .IsUnicode(false);
             entity.Property(e => e.VoucherNo)
                 .HasMaxLength(200)
                 .IsUnicode(false);
@@ -88,9 +83,6 @@ public partial class AppDbContext : DbContext
 
             entity.ToTable("Tbl_SaleDetail");
 
-            entity.Property(e => e.Price)
-                .HasMaxLength(50)
-                .IsUnicode(false);
             entity.Property(e => e.ProductCode)
                 .HasMaxLength(200)
                 .IsUnicode(false);

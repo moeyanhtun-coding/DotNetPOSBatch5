@@ -11,7 +11,7 @@ public partial class TblProduct
 
     public string Name { get; set; } = null!;
 
-    public string Price { get; set; } = null!;
+    public double Price { get; set; }
 
     public string ProductCategoryCode { get; set; } = null!;
 }

@@ -11,5 +11,5 @@ public partial class TblSale
 
     public DateTime SaleDate { get; set; }
 
-    public string TotalAmount { get; set; } = null!;
+    public double TotalAmount { get; set; }
 }
