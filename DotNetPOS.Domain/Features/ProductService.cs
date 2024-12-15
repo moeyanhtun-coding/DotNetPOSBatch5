@@ -36,7 +36,8 @@ namespace DotNetPOS.Domain.Features
                 ProductCode = Ulid.NewUlid().ToString(),
                 Name = productName,
                 Price = price,
-                ProductCategoryCode = productCategoryCode
+                ProductCategoryCode = productCategoryCode,
+                DeleteFlag = false
             };
             
              _db.TblProducts.Add(product);
@@ -44,7 +45,7 @@ namespace DotNetPOS.Domain.Features
             return result;
         }
 
-       public int ProductUpdate(string productCode, double price, string productCategoryCode, string productName )
+       public int ProductUpdate(string productCode, string productName, double price, string productCategoryCode )
         {
             var item =_db.TblProducts.AsNoTracking().FirstOrDefault(x => x.ProductCode == productCode);
             item.Name = productName;
