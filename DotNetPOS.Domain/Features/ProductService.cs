@@ -15,7 +15,7 @@ namespace DotNetPOS.Domain.Features
         private readonly AppDbContext _db = new AppDbContext();
         public List<TblProduct> GetProducts()
         {
-            var lst = _db.TblProducts.ToList();
+            var lst = _db.TblProducts.Where(x => x.DeleteFlag == false).ToList();
             return lst;
         }
 

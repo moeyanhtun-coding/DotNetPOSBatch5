@@ -59,9 +59,9 @@ namespace DotNetPOSBatch5.Controllers
             var result = productService.ProductDelete(productCode);
             if (result < 0)
             {
-                return BadRequest(new { message = "Product creation fail" });
+                return BadRequest(new { message = "Product Deletion fail" });
             }
-            return Ok(new { message = "Product Creation Successful" });
+            return Ok(new { message = "Product  Deletion Successful" });
         }
     }
 }
