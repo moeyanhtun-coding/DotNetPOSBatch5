@@ -38,7 +38,7 @@ public partial class AppDbContext : DbContext
             entity.HasIndex(e => e.ProductCode, "UQ__TblProdu__2F4E024F4B4DBE7C").IsUnique();
 
             entity.Property(e => e.Name).HasMaxLength(100);
-            entity.Property(e => e.Price).HasMaxLength(20);
+            entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.ProductCategoryCode).HasMaxLength(50);
             entity.Property(e => e.ProductCode).HasMaxLength(50);
         });
@@ -62,7 +62,7 @@ public partial class AppDbContext : DbContext
             entity.HasIndex(e => e.VoucherNo, "UQ__TblSale__3AD31D6F90A2C9C8").IsUnique();
 
             entity.Property(e => e.SaleDate).HasColumnType("datetime");
-            entity.Property(e => e.TotalAmount).HasMaxLength(20);
+            entity.Property(e => e.TotalAmount).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.VoucherNo).HasMaxLength(50);
         });
 
@@ -72,7 +72,7 @@ public partial class AppDbContext : DbContext
 
             entity.ToTable("TblSaleDetail");
 
-            entity.Property(e => e.Price).HasMaxLength(20);
+            entity.Property(e => e.Price).HasColumnType("decimal(18, 0)");
             entity.Property(e => e.ProductCode).HasMaxLength(50);
             entity.Property(e => e.VoucherNo).HasMaxLength(50);
 

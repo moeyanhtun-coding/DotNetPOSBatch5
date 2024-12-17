@@ -15,6 +15,11 @@ namespace DotNetPOSBatch5.Controllers
                 return BadRequest(model);
             }
 
+            if (model.IsDatabaseError)
+            {
+                return StatusCode(500, "Database Error Occured");
+            }
+
             return Ok(model);
         }
     }

@@ -13,6 +13,7 @@ namespace DotNetPOS.Domain.Models
         Success,
         ValidationError,
         SystemError,
-        NotFound
+        NotFound,
+        DBError
     }
 }

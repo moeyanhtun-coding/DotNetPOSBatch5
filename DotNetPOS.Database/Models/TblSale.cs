@@ -11,7 +11,7 @@ public partial class TblSale
 
     public DateTime SaleDate { get; set; }
 
-    public string TotalAmount { get; set; } = null!;
+    public decimal? TotalAmount { get; set; }
 
     public virtual ICollection<TblSaleDetail> TblSaleDetails { get; set; } = new List<TblSaleDetail>();
 }

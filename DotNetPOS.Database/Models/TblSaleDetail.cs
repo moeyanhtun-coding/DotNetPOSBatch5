@@ -13,7 +13,7 @@ public partial class TblSaleDetail
 
     public int Quantity { get; set; }
 
-    public string Price { get; set; } = null!;
+    public decimal Price { get; set; }
 
     public virtual TblProduct ProductCodeNavigation { get; set; } = null!;
 

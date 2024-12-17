@@ -86,9 +86,10 @@ namespace DotNetPOS.Domain.Features
                 if (!string.IsNullOrEmpty(productInfo.Name))
                 {
                     product.Name = productInfo.Name;
-                } if (!string.IsNullOrEmpty(productInfo.Price))
+                } 
+                if (productInfo.Price is not null)
                 {
-                    product.Price = productInfo.Price;
+                    product.Price = productInfo.Price.Value;
                 }
                 _db.Entry(product).State = EntityState.Modified;
                 
@@ -102,19 +103,19 @@ namespace DotNetPOS.Domain.Features
             }
         }
 
-        public async Task<Result<string>> DeleteProduct(int productId)
-        {
-            try
-            {
-                var product = await _db.TblProducts.AsNoTracking().FirstOrDefaultAsync(x => x.ProductId == productId);
+        //public async Task<Result<string>> DeleteProduct(int productId)
+        //{
+        //    try
+        //    {
+        //        var product = await _db.TblProducts.AsNoTracking().FirstOrDefaultAsync(x => x.ProductId == productId);
 
-            }
-            catch (Exception)
-            {
+        //    }
+        //    catch (Exception)
+        //    {
 
-                throw;
-            }
-        }
+        //        throw;
+        //    }
+        //}
 
     }
 }

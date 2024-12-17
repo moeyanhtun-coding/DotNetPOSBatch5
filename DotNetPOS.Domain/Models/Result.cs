@@ -14,6 +14,8 @@ namespace DotNetPOS.Domain.Models
 
         public bool IsValidationError { get { return Type == EnumRespType.ValidationError; } }
 
+        public bool IsDatabaseError { get { return Type == EnumRespType.DBError; } }
+
         private EnumRespType Type { get; set; }
 
         public T Data { get; set; }
@@ -36,6 +38,16 @@ namespace DotNetPOS.Domain.Models
             return new Result<T>()
             {
                 IsSuccess = false,
+                Message = message
+            };
+        }
+
+        public static Result<T> Failure(string message)
+        {
+            return new Result<T>()
+            {
+                IsSuccess = false,
+                Type = EnumRespType.DBError,
                 Message = message
             };
         }
