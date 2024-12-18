@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.XPath;
+using DotNetPOS.Database.RequestModel;
 
 namespace DotNetPOS.Domain.Features;
 
@@ -29,14 +30,14 @@ public class ProductService
         return item;
     }
 
-    public int ProductCreate(string productName, double price, string productCategoryCode)
+    public int ProductCreate(ProductRequestModel reqModel)
     {
         TblProduct product = new TblProduct()
         {
             ProductCode = Ulid.NewUlid().ToString(),
-            Name = productName,
-            Price = price,
-            ProductCategoryCode = productCategoryCode,
+            Name = reqModel.ProductName,    
+            Price = reqModel.Price,
+            ProductCategoryCode = reqModel.ProductCategoryCode,
             DeleteFlag = false
         };
         
@@ -45,12 +46,12 @@ public class ProductService
         return result;
     }
 
-   public int ProductUpdate(string productCode, string productName, double price, string productCategoryCode )
+   public int ProductUpdate(string productCode, ProductRequestModel reqModel )
     {
         var item =_db.TblProducts.AsNoTracking().FirstOrDefault(x => x.ProductCode == productCode);
-        item.Name = productName;
-        item.Price = price;
-        item.ProductCategoryCode = productCategoryCode;
+        item.Name = reqModel.ProductName;
+        item.Price = reqModel.Price;
+        item.ProductCategoryCode =reqModel.ProductCategoryCode;
         _db.Entry(item).State = EntityState.Modified;
       var result = _db.SaveChanges();
         return result;

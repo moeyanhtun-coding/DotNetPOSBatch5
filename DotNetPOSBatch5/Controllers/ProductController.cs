@@ -1,4 +1,5 @@
 ﻿using DotNetPOS.Database.Models;
+using DotNetPOS.Database.RequestModel;
 using DotNetPOS.Domain.Features;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
@@ -32,9 +33,9 @@ namespace DotNetPOSBatch5.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostProduct( string name, double price, string productCategoryCode)
+        public IActionResult PostProduct( ProductRequestModel reqModel)
         {
-            var result = productService.ProductCreate(name, price, productCategoryCode);
+            var result = productService.ProductCreate(reqModel);
             if (result < 0)
             {
                 return BadRequest(new { message = "Product creation fail" });
@@ -43,9 +44,9 @@ namespace DotNetPOSBatch5.Controllers
         }
 
         [HttpPatch("{productCode}")]
-        public IActionResult UpdateProduct(string productCode,string name, double price, string productCategoryCode)
+        public IActionResult UpdateProduct(string productCode,ProductRequestModel reqModel)
         {
-            var result = productService.ProductUpdate(productCode, name, price, productCategoryCode);
+            var result = productService.ProductUpdate(productCode, reqModel);
             if (result < 0)
             {
                 return BadRequest(new { message = "Product Update fail" });
