@@ -1,5 +1,4 @@
-﻿using DotNetPOS.Database.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.XPath;
-using DotNetPOS.Database.RequestModel;
 
 namespace DotNetPOS.Domain.Features;
 
@@ -26,7 +24,7 @@ public class ProductService
         var item = _db.TblProducts.FirstOrDefault(x => x.ProductCode == productCode);
         if (item is null)
         {
-            return null;
+            return null ;
         }
 
         return item;
