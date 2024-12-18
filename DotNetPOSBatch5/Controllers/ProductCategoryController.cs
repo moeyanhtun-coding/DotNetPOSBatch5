@@ -1,8 +1,4 @@
-﻿using DotNetPOS.Domain.Features;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-
-namespace DotNetPOSBatch5.Controllers
+﻿namespace DotNetPOSBatch5.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
