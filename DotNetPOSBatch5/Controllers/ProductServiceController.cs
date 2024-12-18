@@ -38,11 +38,18 @@ namespace DotNetPOSBatch5.Controllers
             return Execute(newProduct); 
         }
 
-        [HttpPatch("{productId}")]
-        public async Task<IActionResult> ChangeProductInfo(int productId, ChangeProductInfoRequestModel productInfo)
+        [HttpPatch("{productCode}")]
+        public async Task<IActionResult> ChangeProductInfo(string productCode, ChangeProductInfoRequestModel productInfo)
         {
-            var changedProduct = await _productService.ChangeProductInfo(productId, productInfo);
+            var changedProduct = await _productService.ChangeProductInfo(productCode, productInfo);
             return Execute(changedProduct);
+        }
+
+        [HttpDelete("{productCode}")]
+        public async Task<IActionResult> DeleteProduct(string productCode)
+        {
+            var result = await _productService.DeleteProduct(productCode); 
+            return Execute(result);
         }
     }
 }

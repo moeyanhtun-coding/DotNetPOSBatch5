@@ -13,6 +13,7 @@ namespace DotNetPOS.Domain.Models
         public bool IsError => !IsSuccess;
 
         public bool IsValidationError { get { return Type == EnumRespType.ValidationError; } }
+        public bool IsNotFoundError { get { return Type == EnumRespType.NotFound; } }
 
         public bool IsDatabaseError { get { return Type == EnumRespType.DBError; } }
 
@@ -38,6 +39,7 @@ namespace DotNetPOS.Domain.Models
             return new Result<T>()
             {
                 IsSuccess = false,
+                Type = EnumRespType.NotFound,
                 Message = message
             };
         }

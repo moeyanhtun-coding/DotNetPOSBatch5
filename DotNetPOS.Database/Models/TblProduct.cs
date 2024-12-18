@@ -15,5 +15,7 @@ public partial class TblProduct
 
     public string ProductCategoryCode { get; set; } = null!;
 
+    public bool DeleteFlag { get; set; }
+
     public virtual ICollection<TblSaleDetail> TblSaleDetails { get; set; } = new List<TblSaleDetail>();
 }

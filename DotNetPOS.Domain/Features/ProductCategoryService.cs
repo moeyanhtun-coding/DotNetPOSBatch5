@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DotNetPOS.Database.Models;
+using DotNetPOS.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace DotNetPOS.Domain.Features
@@ -17,55 +18,70 @@ namespace DotNetPOS.Domain.Features
             _db = db;
         }
 
-        public List<TblProductCategory> GetProductCategories()
+        public async Task<Result<List<ProductCategoryRespModel>>> GetProductCategories()
         {
-            var lst = _db.TblProductCategories.ToList();
-            return lst;
+            var lst = await _db.TblProductCategories.AsNoTracking().ToListAsync();
+            var model = lst.Select(x => new ProductCategoryRespModel()
+            {
+                Name = x.Name,
+                ProductCategoryCode = x.ProductCategoryCode,
+            }).ToList();
+
+            return Result<List<ProductCategoryRespModel>>.Success(model);
         }
-        public TblProductCategory GetProductCategoryByCode(string code)
+        public async Task<Result<ProductCategoryRespModel>> GetProductCategoryByCode(string code)
         {
-            var item = _db.TblProductCategories
+            var item = await _db.TblProductCategories
                 .AsNoTracking()
-                .FirstOrDefault(x => x.ProductCategoryCode == code)!;
+                .FirstOrDefaultAsync(x => x.ProductCategoryCode == code)!;
             if (item is null)
-                return null!;
-            return item;
+            {
+                return Result<ProductCategoryRespModel>.NoProductFound("Product Category Not Found");
+            }
+            var model = new ProductCategoryRespModel()
+            {
+                Name = item.Name,
+                ProductCategoryCode = item.ProductCategoryCode,
+            };
+            return Result<ProductCategoryRespModel>.Success(model);
         }
-        public int PostProductCategory(string categoryName)
+        public async Task<Result<string>> PostProductCategory(string categoryName)
         {
             var item = new TblProductCategory
             {
                 ProductCategoryCode = "PC-" + Ulid.NewUlid().ToString(),
                 Name = categoryName
             };
-            _db.Add(item);
-            var result = _db.SaveChanges();
-            return result;
+            await _db.AddAsync(item);
+            await _db.SaveChangesAsync();
+            return Result<string>.Success("New Product Category Created Successfully");
         }
 
-        public int UpdateProductCategory(string categoryCode , string categoryName)
+        public async Task<Result<string>> UpdateProductCategory(string categoryCode , string categoryName)
         {
-            var item = _db.TblProductCategories
+            var item = await _db.TblProductCategories
                 .AsNoTracking()
-                .FirstOrDefault(x => x.ProductCategoryCode == categoryCode);
-            if(item is null)
-                return 0;
+                .FirstOrDefaultAsync(x => x.ProductCategoryCode == categoryCode);
+            if (item is null)
+                return Result<string>.NoProductFound("No category found");
             if(!string.IsNullOrEmpty(categoryName))
                 item.Name = categoryName;
             _db.Entry(item).State = EntityState.Modified;
-            var result = _db.SaveChanges();
-            return result;
+            await _db.SaveChangesAsync();
+            return Result<string>.Success("Category Updated Successfully");
         }
-        public int DeleteProductCategory(string categoryCode)
+        public async Task<Result<string>> DeleteProductCategory(string categoryCode)
         {
-            var item = _db.TblProductCategories
+            var item = await _db.TblProductCategories
                 .AsNoTracking()
-                .FirstOrDefault(x =>x.ProductCategoryCode == categoryCode);
+                .FirstOrDefaultAsync(x =>x.ProductCategoryCode == categoryCode);
             if (item is null)
-                return 0;
+                return Result<string>.NoProductFound("Category not found");
+
+            item.DeleteFlag = true;
             _db.Entry(item).State = EntityState.Deleted;
-           var result = _db.SaveChanges();
-            return result;
+           await _db.SaveChangesAsync();
+            return Result<string>.Success("Deleted Successfully");
         }
     }
 }

@@ -10,4 +10,6 @@ public partial class TblProductCategory
     public string ProductCategoryCode { get; set; } = null!;
 
     public string Name { get; set; } = null!;
+
+    public bool DeleteFlag { get; set; }
 }

@@ -47,8 +47,8 @@ namespace DotNetPOS.Domain.Features
                 await _db.AddRangeAsync(saleDetails);
                 await _db.SaveChangesAsync();
                 await _saleService.UpdateVoucher(voucherNo);
-              
-                return Result<string>.Success("Sale Details Created Successfully");
+
+                return Result<string>.Success($"Sale Details Created Successfully with voucher no {voucherNo}");
             }
             catch (Exception e)
             {

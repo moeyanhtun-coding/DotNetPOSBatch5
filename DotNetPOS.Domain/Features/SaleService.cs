@@ -79,7 +79,7 @@ namespace DotNetPOS.Domain.Features
                     .Select(s => new VoucherRespModel()
                     {
                         VoucherNo = voucherNo,
-                        Products = s.TblSaleDetails.Select(sd => new ProductDetail()
+                        Products = s.TblSaleDetails.Select(sd => new VoucherItemDetails()
                         {
                             ProductCode = sd.ProductCode,
                             ProductName = sd.ProductCodeNavigation.Name,
