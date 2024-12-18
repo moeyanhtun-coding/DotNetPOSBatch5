@@ -21,6 +21,7 @@ namespace DotNetPOSBatch5.Controllers
             {
                 return Ok(new { message = "Product List is Empty" });
             }
+
             return Ok(lst);
         }
 
@@ -28,29 +29,31 @@ namespace DotNetPOSBatch5.Controllers
         public IActionResult GetProduct(string productCode)
         {
             var item = productService.GetProduct(productCode);
-            if (item is null) return NotFound(new {message = "Product Not Found"});
+            if (item is null) return NotFound(new { message = "Product Not Found" });
             return Ok(item);
         }
 
         [HttpPost]
-        public IActionResult PostProduct( ProductRequestModel reqModel)
+        public IActionResult PostProduct(ProductRequestModel reqModel)
         {
             var result = productService.ProductCreate(reqModel);
             if (result < 0)
             {
                 return BadRequest(new { message = "Product creation fail" });
             }
+
             return Ok(new { message = "Product Creation Successful" });
         }
 
         [HttpPatch("{productCode}")]
-        public IActionResult UpdateProduct(string productCode,ProductRequestModel reqModel)
+        public IActionResult UpdateProduct(string productCode, ProductRequestModel reqModel)
         {
             var result = productService.ProductUpdate(productCode, reqModel);
             if (result < 0)
             {
                 return BadRequest(new { message = "Product Update fail" });
             }
+
             return Ok(new { message = "Product Update Successful" });
         }
 
@@ -62,6 +65,7 @@ namespace DotNetPOSBatch5.Controllers
             {
                 return BadRequest(new { message = "Product Deletion fail" });
             }
+
             return Ok(new { message = "Product  Deletion Successful" });
         }
     }
