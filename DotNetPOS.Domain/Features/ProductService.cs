@@ -14,6 +14,7 @@ namespace DotNetPOS.Domain.Features;
 public class ProductService
 {
     private readonly AppDbContext _db = new AppDbContext();
+
     public List<TblProduct> GetProducts()
     {
         var lst = _db.TblProducts.Where(x => x.DeleteFlag == false).ToList();
@@ -27,6 +28,7 @@ public class ProductService
         {
             return null;
         }
+
         return item;
     }
 
@@ -35,25 +37,25 @@ public class ProductService
         TblProduct product = new TblProduct()
         {
             ProductCode = Ulid.NewUlid().ToString(),
-            Name = reqModel.ProductName,    
+            Name = reqModel.ProductName,
             Price = reqModel.Price,
             ProductCategoryCode = reqModel.ProductCategoryCode,
             DeleteFlag = false
         };
-        
-         _db.TblProducts.Add(product);
+
+        _db.TblProducts.Add(product);
         var result = _db.SaveChanges();
         return result;
     }
 
-   public int ProductUpdate(string productCode, ProductRequestModel reqModel )
+    public int ProductUpdate(string productCode, ProductRequestModel reqModel)
     {
-        var item =_db.TblProducts.AsNoTracking().FirstOrDefault(x => x.ProductCode == productCode);
+        var item = _db.TblProducts.AsNoTracking().FirstOrDefault(x => x.ProductCode == productCode);
         item.Name = reqModel.ProductName;
         item.Price = reqModel.Price;
-        item.ProductCategoryCode =reqModel.ProductCategoryCode;
+        item.ProductCategoryCode = reqModel.ProductCategoryCode;
         _db.Entry(item).State = EntityState.Modified;
-      var result = _db.SaveChanges();
+        var result = _db.SaveChanges();
         return result;
     }
 
