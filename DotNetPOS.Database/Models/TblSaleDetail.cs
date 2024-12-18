@@ -15,3 +15,4 @@ public partial class TblSaleDetail
 
     public double Price { get; set; }
 }
+

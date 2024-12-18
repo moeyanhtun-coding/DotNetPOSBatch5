@@ -1,5 +1,3 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace DotNetPOSBatch5.Controllers
 {
     [ApiController]
