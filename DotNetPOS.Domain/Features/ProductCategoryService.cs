@@ -11,6 +11,7 @@ namespace DotNetPOS.Domain.Features
 {
     public class ProductCategoryService
     {
+        // applied dependency injection
         private readonly AppDbContext _db;
 
         public ProductCategoryService(AppDbContext db)
